@@ -1,0 +1,9 @@
+.idea/
+
+.env/
+
+my_model/
+photo/
+uploads/
+
+app/static/
