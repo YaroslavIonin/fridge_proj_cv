@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  food-detector-api:
+    build: .
+    container_name: food_detector_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
