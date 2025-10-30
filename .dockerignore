@@ -24,9 +24,6 @@ outputs/
 temp/
 tmp/
 
-my_model/**/*.pt
-!my_model/train6/weights/best.pt
-
 .env/
 env/
 venv/
