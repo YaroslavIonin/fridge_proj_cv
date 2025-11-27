@@ -7,3 +7,4 @@ photo/
 uploads/
 
 app/static/
+.envfile
