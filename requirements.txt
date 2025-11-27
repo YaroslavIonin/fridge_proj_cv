@@ -60,3 +60,5 @@ ultralytics==8.3.212
 ultralytics-thop==2.0.17
 urllib3==2.5.0
 uvicorn==0.37.0
+openai
+python-dotenv
