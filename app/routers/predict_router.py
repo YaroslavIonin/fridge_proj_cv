@@ -1,7 +1,13 @@
+from typing import Literal, Union
+
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
-from app.model import model
+
 from app.utils import save_upload_file
+from app.schemas import PredictRequestSchemas, DetectionResponseSimple, DetectionResponseGeneric
+
+from .api_predict import api_predict
+from .model_predict import model_predict
 
 router = APIRouter(
     prefix="/predict",
@@ -9,38 +15,19 @@ router = APIRouter(
 )
 
 
-@router.post("/")
-async def predict_image(file: UploadFile = File(...)):
+@router.post("/",)  # response_model=Union[DetectionResponseSimple, DetectionResponseGeneric])
+async def predict_image(
+        engine: Literal["model", "api"] = "model",
+        file: UploadFile = File(..., description="Фото для распознавания"),
+):
     try:
         image_path = save_upload_file(file)
 
-        results = model.predict(
-            source=image_path,
-            conf=0.25,
-            save=False,
-            imgsz=640,
-        )
-
-        detections = []
-        for r in results:
-            boxes = r.boxes
-            for box in boxes:
-                cls = int(box.cls)
-                conf = float(box.conf)
-                xyxy = box.xyxy[0].cpu().numpy().tolist()
-                detections.append({
-                    "class_id": cls,
-                    "class_name": model.names[cls],
-                    "confidence": round(conf, 3),
-                    "bbox": xyxy
-                })
-
-        return JSONResponse(
-            content={
-                "filename": file.filename,
-                "detections": detections
-            },
-        )
+        if engine == "model":
+            return await model_predict(image_path)
+        if engine == "api":
+            return await api_predict(image_path)
+        raise Exception(f"Неизвестный engine: {engine}")
 
     except Exception as e:
         return JSONResponse(
