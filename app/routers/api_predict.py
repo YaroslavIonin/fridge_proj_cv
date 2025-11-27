@@ -9,7 +9,7 @@ from app.utils import encode_image, extract_products_from_json
 load_dotenv('.envfile')
 
 
-async def api_predict(image_path: str) -> DetectionResponseSimple:
+async def api_predict(image_path: str, llm_model: str) -> DetectionResponseSimple:
     base64_image = encode_image(image_path)
 
     client = OpenAI(
@@ -46,11 +46,7 @@ async def api_predict(image_path: str) -> DetectionResponseSimple:
 
     response = client.chat.completions.create(
         # model="x-ai/grok-4.1-fast:free",
-        model="openrouter/bert-nebulon-alpha",
-        # model="google/gemini-2.0-flash-exp:free",
-        # model="qwen/qwen2.5-vl-32b-instruct:free",
-        # model="google/gemma-3-12b-it:free",
-        # model="mistralai/mistral-small-3.1-24b-instruct:free",
+        model=llm_model,
         messages=[
             # {
             #     "role": "system",
