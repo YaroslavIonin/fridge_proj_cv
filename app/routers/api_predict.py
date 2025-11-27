@@ -1,12 +1,8 @@
 import os
 from openai import OpenAI
-from fastapi.responses import JSONResponse
-from dotenv import load_dotenv
 
-from app.schemas import DetectionBase, DetectionResponseSimple
+from app.schemas import DetectionResponseSimple
 from app.utils import encode_image, extract_products_from_json
-
-load_dotenv('.envfile')
 
 
 async def api_predict(image_path: str, llm_model: str) -> DetectionResponseSimple:

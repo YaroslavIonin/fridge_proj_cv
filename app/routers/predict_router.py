@@ -1,10 +1,13 @@
-from typing import Literal, Union, Optional
+from typing import Literal
 
-from fastapi import APIRouter, File, UploadFile
+from fastapi import (
+    File,
+    APIRouter,
+    UploadFile,
+)
 from fastapi.responses import JSONResponse
 
 from app.utils import save_upload_file
-from app.schemas import PredictRequestSchemas, DetectionResponseSimple, DetectionResponseGeneric
 
 from .api_predict import api_predict
 from .model_predict import model_predict
@@ -23,6 +26,7 @@ async def predict_image(
             "openrouter/bert-nebulon-alpha",
             "google/gemini-2.0-flash-exp:free",
             "qwen/qwen2.5-vl-32b-instruct:free",
+            "nvidia/nemotron-nano-12b-v2-vl:free",
             "google/gemma-3-12b-it:free",
             "mistralai/mistral-small-3.1-24b-instruct:free",
         ] = None,
