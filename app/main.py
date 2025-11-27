@@ -1,6 +1,9 @@
 from fastapi import FastAPI
+from dotenv import load_dotenv
 
 from app.routers import predict_router
+
+load_dotenv('.envfile')
 
 app = FastAPI(
     title="Food Detector API",
