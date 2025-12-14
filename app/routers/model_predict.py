@@ -7,7 +7,7 @@ async def model_predict(image_path: str) -> DetectionResponseGeneric:
         source=image_path,
         conf=0.25,
         save=True,
-        imgsz=640,
+        imgsz=416,
     )
 
     detections = []

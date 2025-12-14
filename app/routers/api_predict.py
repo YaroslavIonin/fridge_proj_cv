@@ -62,7 +62,7 @@ async def api_predict(image_path: str, llm_model: str) -> DetectionResponseSimpl
                     },
                     {
                         "type": "image_url",
-                        "image_url": f"data:image/jpg;base64,{base64_image}",
+                        "image_url": f"data:image/jpeg;base64,{base64_image}",
                     },
                 ],
             }
